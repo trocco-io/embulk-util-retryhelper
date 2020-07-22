@@ -74,11 +74,11 @@ public class JAXRSRetryHelper
                                   final JAXRSSingleRequester singleRequester)
     {
         try {
-            return RetryExecutor
-                .retryExecutor()
+            return RetryExecutor.builder()
                 .withRetryLimit(this.maximumRetries)
-                .withInitialRetryWait(this.initialRetryIntervalMillis)
-                .withMaxRetryWait(this.maximumRetryIntervalMillis)
+                .withInitialRetryWaitMillis(this.initialRetryIntervalMillis)
+                .withMaxRetryWaitMillis(this.maximumRetryIntervalMillis)
+                .build()
                 .runInterruptible(new Retryable<T>() {
                         @Override
                         public T call()

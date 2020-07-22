@@ -1,27 +1,72 @@
 package org.embulk.util.retryhelper;
 
 public class RetryExecutor {
-    private RetryExecutor(int retryLimit, int initialRetryWait, int maxRetryWait) {
+    private RetryExecutor(final int retryLimit, final int initialRetryWait, final int maxRetryWait) {
         this.retryLimit = retryLimit;
         this.initialRetryWait = initialRetryWait;
         this.maxRetryWait = maxRetryWait;
     }
 
+    public static RetryExecutor ofDefault() {
+        return new RetryExecutor(
+                DEFAULT_RETRY_LIMIT,
+                DEFAULT_INITIAL_RETRY_WAIT_MILLIS,
+                DEFAULT_MAX_RETRY_WAIT_MILLIS);
+    }
+
+    @Deprecated
     public static RetryExecutor retryExecutor() {
-        // TODO default configuration
-        return new RetryExecutor(3, 500, 30 * 60 * 1000);
+        return ofDefault();
     }
 
+    @Deprecated
     public RetryExecutor withRetryLimit(int count) {
-        return new RetryExecutor(count, initialRetryWait, maxRetryWait);
+        return new RetryExecutor(count, this.initialRetryWait, this.maxRetryWait);
     }
 
+    @Deprecated
     public RetryExecutor withInitialRetryWait(int msec) {
-        return new RetryExecutor(retryLimit, msec, maxRetryWait);
+        return new RetryExecutor(this.retryLimit, msec, this.maxRetryWait);
     }
 
+    @Deprecated
     public RetryExecutor withMaxRetryWait(int msec) {
-        return new RetryExecutor(retryLimit, initialRetryWait, msec);
+        return new RetryExecutor(this.retryLimit, this.initialRetryWait, msec);
+    }
+
+    public static class Builder {
+        Builder() {
+            this.retryLimit = DEFAULT_RETRY_LIMIT;
+            this.initialRetryWaitMillis = DEFAULT_INITIAL_RETRY_WAIT_MILLIS;
+            this.maxRetryWaitMillis = DEFAULT_MAX_RETRY_WAIT_MILLIS;
+        }
+
+        public Builder withRetryLimit(final int retryLimit) {
+            this.retryLimit = retryLimit;
+            return this;
+        }
+
+        public Builder withInitialRetryWaitMillis(final int initialRetryWaitMillis) {
+            this.initialRetryWaitMillis = initialRetryWaitMillis;
+            return this;
+        }
+
+        public Builder withMaxRetryWaitMillis(final int maxRetryWaitMillis) {
+            this.maxRetryWaitMillis = maxRetryWaitMillis;
+            return this;
+        }
+
+        public RetryExecutor build() {
+            return new RetryExecutor(this.retryLimit, this.initialRetryWaitMillis, this.maxRetryWaitMillis);
+        }
+
+        private int retryLimit;
+        private int initialRetryWaitMillis;
+        private int maxRetryWaitMillis;
+    }
+
+    public static Builder builder() {
+        return new Builder();
     }
 
     public <T> T runInterruptible(Retryable<T> op)
@@ -74,6 +119,10 @@ public class RetryExecutor {
             }
         }
     }
+
+    private static final int DEFAULT_RETRY_LIMIT = 3;
+    private static final int DEFAULT_INITIAL_RETRY_WAIT_MILLIS = 500;
+    private static final int DEFAULT_MAX_RETRY_WAIT_MILLIS = 30 * 60 * 1000;
 
     private final int retryLimit;
     private final int initialRetryWait;
