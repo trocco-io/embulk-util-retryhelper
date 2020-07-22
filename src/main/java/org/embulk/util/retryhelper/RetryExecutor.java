@@ -4,9 +4,27 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 
 public class RetryExecutor {
+    private RetryExecutor(int retryLimit, int initialRetryWait, int maxRetryWait) {
+        this.retryLimit = retryLimit;
+        this.initialRetryWait = initialRetryWait;
+        this.maxRetryWait = maxRetryWait;
+    }
+
     public static RetryExecutor retryExecutor() {
         // TODO default configuration
         return new RetryExecutor(3, 500, 30 * 60 * 1000);
+    }
+
+    public RetryExecutor withRetryLimit(int count) {
+        return new RetryExecutor(count, initialRetryWait, maxRetryWait);
+    }
+
+    public RetryExecutor withInitialRetryWait(int msec) {
+        return new RetryExecutor(retryLimit, msec, maxRetryWait);
+    }
+
+    public RetryExecutor withMaxRetryWait(int msec) {
+        return new RetryExecutor(retryLimit, initialRetryWait, msec);
     }
 
     public static class RetryGiveupException extends ExecutionException {
@@ -33,28 +51,6 @@ public class RetryExecutor {
 
         public void onGiveup(Exception firstException, Exception lastException)
                 throws RetryGiveupException;
-    }
-
-    private final int retryLimit;
-    private final int initialRetryWait;
-    private final int maxRetryWait;
-
-    private RetryExecutor(int retryLimit, int initialRetryWait, int maxRetryWait) {
-        this.retryLimit = retryLimit;
-        this.initialRetryWait = initialRetryWait;
-        this.maxRetryWait = maxRetryWait;
-    }
-
-    public RetryExecutor withRetryLimit(int count) {
-        return new RetryExecutor(count, initialRetryWait, maxRetryWait);
-    }
-
-    public RetryExecutor withInitialRetryWait(int msec) {
-        return new RetryExecutor(retryLimit, msec, maxRetryWait);
-    }
-
-    public RetryExecutor withMaxRetryWait(int msec) {
-        return new RetryExecutor(retryLimit, initialRetryWait, msec);
     }
 
     public <T> T runInterruptible(Retryable<T> op)
@@ -107,4 +103,8 @@ public class RetryExecutor {
             }
         }
     }
+
+    private final int retryLimit;
+    private final int initialRetryWait;
+    private final int maxRetryWait;
 }
