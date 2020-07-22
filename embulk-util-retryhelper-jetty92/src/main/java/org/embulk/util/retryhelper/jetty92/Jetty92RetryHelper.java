@@ -11,8 +11,8 @@ import org.eclipse.jetty.client.api.Response;
 import org.eclipse.jetty.http.HttpMethod;
 import org.eclipse.jetty.util.ssl.SslContextFactory;
 
-import org.embulk.spi.Exec;
 import org.embulk.spi.util.RetryExecutor;
+import org.slf4j.LoggerFactory;
 
 public class Jetty92RetryHelper
         implements AutoCloseable
@@ -32,7 +32,7 @@ public class Jetty92RetryHelper
             throw new RuntimeException(ex);
         }
         this.closeAutomatically = true;
-        this.logger = Exec.getLogger(Jetty92RetryHelper.class);
+        this.logger = LoggerFactory.getLogger(Jetty92RetryHelper.class);
     }
 
     public Jetty92RetryHelper(int maximumRetries,

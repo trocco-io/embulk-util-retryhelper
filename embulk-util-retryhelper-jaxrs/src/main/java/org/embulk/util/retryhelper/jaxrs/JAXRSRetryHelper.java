@@ -4,8 +4,8 @@ import java.util.Locale;
 
 import com.google.common.base.Throwables;
 
-import org.embulk.spi.Exec;
 import org.embulk.spi.util.RetryExecutor;
+import org.slf4j.LoggerFactory;
 
 public class JAXRSRetryHelper
         implements AutoCloseable
@@ -20,7 +20,7 @@ public class JAXRSRetryHelper
              maximumRetryIntervalMillis,
              clientCreator.create(),
              true,
-             Exec.getLogger(JAXRSRetryHelper.class));
+             LoggerFactory.getLogger(JAXRSRetryHelper.class));
     }
 
     public JAXRSRetryHelper(int maximumRetries,
