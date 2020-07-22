@@ -1,7 +1,7 @@
 package org.embulk.util.retryhelper.jaxrs;
 
 import java.util.Locale;
-import org.embulk.spi.util.RetryExecutor;
+import org.embulk.util.retryhelper.RetryExecutor;
 import org.slf4j.LoggerFactory;
 
 public class JAXRSRetryHelper

@@ -7,8 +7,7 @@ import org.eclipse.jetty.client.api.ContentResponse;
 import org.eclipse.jetty.client.api.Response;
 import org.eclipse.jetty.http.HttpMethod;
 import org.eclipse.jetty.util.ssl.SslContextFactory;
-
-import org.embulk.spi.util.RetryExecutor;
+import org.embulk.util.retryhelper.RetryExecutor;
 import org.slf4j.LoggerFactory;
 
 public class Jetty92RetryHelper

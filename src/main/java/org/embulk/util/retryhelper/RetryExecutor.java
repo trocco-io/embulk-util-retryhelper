@@ -1,4 +1,4 @@
-package org.embulk.spi.util;
+package org.embulk.util.retryhelper;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
