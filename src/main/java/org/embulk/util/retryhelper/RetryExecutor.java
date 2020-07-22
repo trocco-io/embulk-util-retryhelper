@@ -1,8 +1,5 @@
 package org.embulk.util.retryhelper;
 
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-
 public class RetryExecutor {
     private RetryExecutor(int retryLimit, int initialRetryWait, int maxRetryWait) {
         this.retryLimit = retryLimit;
@@ -25,32 +22,6 @@ public class RetryExecutor {
 
     public RetryExecutor withMaxRetryWait(int msec) {
         return new RetryExecutor(retryLimit, initialRetryWait, msec);
-    }
-
-    public static class RetryGiveupException extends ExecutionException {
-        public RetryGiveupException(String message, Exception cause) {
-            super(cause);
-        }
-
-        public RetryGiveupException(Exception cause) {
-            super(cause);
-        }
-
-        public Exception getCause() {
-            return (Exception) super.getCause();
-        }
-    }
-
-    public static interface Retryable<T> extends Callable<T> {
-        public T call() throws Exception;
-
-        public boolean isRetryableException(Exception exception);
-
-        public void onRetry(Exception exception, int retryCount, int retryLimit, int retryWait)
-                throws RetryGiveupException;
-
-        public void onGiveup(Exception firstException, Exception lastException)
-                throws RetryGiveupException;
     }
 
     public <T> T runInterruptible(Retryable<T> op)

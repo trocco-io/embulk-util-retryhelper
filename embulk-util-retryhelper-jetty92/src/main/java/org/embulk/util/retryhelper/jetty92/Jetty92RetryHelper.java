@@ -7,7 +7,9 @@ import org.eclipse.jetty.client.api.ContentResponse;
 import org.eclipse.jetty.client.api.Response;
 import org.eclipse.jetty.http.HttpMethod;
 import org.eclipse.jetty.util.ssl.SslContextFactory;
+import org.embulk.util.retryhelper.Retryable;
 import org.embulk.util.retryhelper.RetryExecutor;
+import org.embulk.util.retryhelper.RetryGiveupException;
 import org.slf4j.LoggerFactory;
 
 public class Jetty92RetryHelper
@@ -93,7 +95,7 @@ public class Jetty92RetryHelper
                 .withRetryLimit(this.maximumRetries)
                 .withInitialRetryWait(this.initialRetryIntervalMillis)
                 .withMaxRetryWait(this.maximumRetryIntervalMillis)
-                .runInterruptible(new RetryExecutor.Retryable<T>() {
+                .runInterruptible(new Retryable<T>() {
                         @Override
                         public T call()
                                 throws Exception
@@ -132,7 +134,7 @@ public class Jetty92RetryHelper
 
                         @Override
                         public void onRetry(Exception exception, int retryCount, int retryLimit, int retryWait)
-                                throws RetryExecutor.RetryGiveupException
+                                throws RetryGiveupException
                         {
                             String message = String.format(
                                 Locale.ENGLISH, "Retrying %d/%d after %d seconds. Message: %s",
@@ -147,7 +149,7 @@ public class Jetty92RetryHelper
 
                         @Override
                         public void onGiveup(Exception first, Exception last)
-                                throws RetryExecutor.RetryGiveupException
+                                throws RetryGiveupException
                         {
                         }
                     });
@@ -157,8 +159,8 @@ public class Jetty92RetryHelper
             // InterruptedException must not be RuntimeException.
             throw new RuntimeException(ex);
         }
-        catch (RetryExecutor.RetryGiveupException ex) {
-            // RetryExecutor.RetryGiveupException is ExecutionException, which must not be RuntimeException.
+        catch (RetryGiveupException ex) {
+            // RetryGiveupException is ExecutionException, which must not be RuntimeException.
             throw new RuntimeException(ex.getCause());
         }
     }
