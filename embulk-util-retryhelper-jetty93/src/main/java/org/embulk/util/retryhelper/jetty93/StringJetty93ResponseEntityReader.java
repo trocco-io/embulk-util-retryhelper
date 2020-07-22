@@ -1,11 +1,7 @@
 package org.embulk.util.retryhelper.jetty93;
 
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.concurrent.TimeUnit;
-
-import com.google.common.io.CharStreams;
-
 import org.eclipse.jetty.client.api.Response;
 import org.eclipse.jetty.client.util.InputStreamResponseListener;
 
@@ -35,10 +31,7 @@ public class StringJetty93ResponseEntityReader
     public final String readResponseContent()
             throws Exception
     {
-        final InputStream inputStream = this.listener.getInputStream();
-        try (InputStreamReader inputStreamReader = new InputStreamReader(inputStream)) {
-            return CharStreams.toString(inputStreamReader);
-        }
+        return Util.asString(this.listener.getInputStream());
     }
 
     @Override

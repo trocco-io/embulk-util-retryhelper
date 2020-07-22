@@ -1,9 +1,6 @@
 package org.embulk.util.retryhelper.jaxrs;
 
 import java.util.Locale;
-
-import com.google.common.base.Throwables;
-
 import org.embulk.spi.util.RetryExecutor;
 import org.slf4j.LoggerFactory;
 
@@ -126,10 +123,12 @@ public class JAXRSRetryHelper
         }
         catch (InterruptedException ex) {
             Thread.currentThread().interrupt();
-            throw Throwables.propagate(ex);
+            // InterruptedException must not be RuntimeException.
+            throw new RuntimeException(ex);
         }
         catch (RetryExecutor.RetryGiveupException ex) {
-            throw Throwables.propagate(ex.getCause());
+            // RetryExecutor.RetryGiveupException is ExecutionException, which must not be RuntimeException.
+            throw new RuntimeException(ex.getCause());
         }
     }
 

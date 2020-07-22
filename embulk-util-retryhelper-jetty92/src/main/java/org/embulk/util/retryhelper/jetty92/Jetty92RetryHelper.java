@@ -1,9 +1,6 @@
 package org.embulk.util.retryhelper.jetty92;
 
 import java.util.Locale;
-
-import com.google.common.base.Throwables;
-
 import org.eclipse.jetty.client.HttpClient;
 import org.eclipse.jetty.client.HttpResponseException;
 import org.eclipse.jetty.client.api.ContentResponse;
@@ -115,7 +112,7 @@ public class Jetty92RetryHelper
                                         "Response not 2xx: "
                                         + response.getStatus() + " "
                                         + response.getReason() + " "
-                                        + "Response body not available by: " + Throwables.getStackTraceAsString(ex),
+                                        + "Response body not available by: " + Util.getStackTraceAsString(ex),
                                         response);
                                 }
                                 throw new HttpResponseException(
@@ -158,10 +155,12 @@ public class Jetty92RetryHelper
         }
         catch (InterruptedException ex) {
             Thread.currentThread().interrupt();
-            throw Throwables.propagate(ex);
+            // InterruptedException must not be RuntimeException.
+            throw new RuntimeException(ex);
         }
         catch (RetryExecutor.RetryGiveupException ex) {
-            throw Throwables.propagate(ex.getCause());
+            // RetryExecutor.RetryGiveupException is ExecutionException, which must not be RuntimeException.
+            throw new RuntimeException(ex.getCause());
         }
     }
 
