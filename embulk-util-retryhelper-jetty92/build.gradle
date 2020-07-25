@@ -23,7 +23,6 @@ repositories {
 
 dependencies {
     compile project(":")
-    compile "com.google.guava:guava:18.0"
     compile "org.slf4j:slf4j-api:1.7.12"
 
     compile     'org.eclipse.jetty:jetty-client:9.2.14.v20151106'
