@@ -176,7 +176,9 @@ public class Jetty93RetryHelper
             throw new RuntimeException(ex);
         }
         catch (RetryGiveupException ex) {
-            // RetryGiveupException is ExecutionException, which must not be RuntimeException.
+            if (ex.getCause() instanceof RuntimeException) {
+                throw (RuntimeException) ex.getCause();
+            }
             throw new RuntimeException(ex.getCause());
         }
     }
