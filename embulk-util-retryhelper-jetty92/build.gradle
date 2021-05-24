@@ -19,12 +19,12 @@ configurations {
 
 repositories {
     mavenCentral()
-    jcenter()
 }
 
 dependencies {
+    compileOnly "org.slf4j:slf4j-api:1.7.30"
+
     api project(":")
-    api "org.slf4j:slf4j-api:1.7.12"
     api "org.eclipse.jetty:jetty-client:9.2.14.v20151106"
 }
 
