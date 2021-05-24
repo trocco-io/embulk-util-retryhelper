@@ -19,12 +19,12 @@ configurations {
 
 repositories {
     mavenCentral()
-    jcenter()
 }
 
 dependencies {
+    compileOnly "org.slf4j:slf4j-api:1.7.30"
+
     api project(":")
-    api "org.slf4j:slf4j-api:1.7.12"
     api "javax.ws.rs:javax.ws.rs-api:2.0.1"
 }
 
