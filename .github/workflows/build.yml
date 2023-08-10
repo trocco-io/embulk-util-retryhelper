@@ -10,4 +10,4 @@ jobs:
       with:
         java-version: 1.8
     - name: Build
-      run: ./gradlew --stacktrace :jar embulk-util-retryhelper-jaxrs:jar embulk-util-retryhelper-jetty92:jar embulk-util-retryhelper-jetty93:jar
+      run: ./gradlew --stacktrace :jar embulk-util-retryhelper-jaxrs:jar embulk-util-retryhelper-jetty92:jar embulk-util-retryhelper-jetty93:jar embulk-util-retryhelper-jetty94:jar

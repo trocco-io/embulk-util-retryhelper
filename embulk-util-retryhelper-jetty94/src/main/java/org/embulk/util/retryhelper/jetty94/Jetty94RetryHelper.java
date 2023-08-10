@@ -65,7 +65,7 @@ public class Jetty94RetryHelper
     }
 
     /**
-     * Creates a {@code Jetty93RetryHelper} instance with a ready-made Jetty 9.3 {@code HttpClient} instance.
+     * Creates a {@code Jetty94RetryHelper} instance with a ready-made Jetty 9.4 {@code HttpClient} instance.
      *
      * Note that the {@code HttpClient} instance is not automatically closed.
      */

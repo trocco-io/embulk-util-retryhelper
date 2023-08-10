@@ -17,14 +17,14 @@
 package org.embulk.util.retryhelper.jetty94;
 
 /**
- * Jetty93SingleRequester is to define a single request to the target REST service to be ready for retries.
+ * Jetty94SingleRequester is to define a single request to the target REST service to be ready for retries.
  *
  * It is expected to use with {@link Jetty94RetryHelper} as follows.
  *
  * <pre>{@code
- * InputStream inputStream = jetty93RetryHelper.requestWithRetry(
- *     new InputStreamJetty93ResponseEntityReader(),
- *     new Jetty93SingleRequester() {
+ * InputStream inputStream = jetty94RetryHelper.requestWithRetry(
+ *     new InputStreamJetty94ResponseEntityReader(),
+ *     new Jetty94SingleRequester() {
  *         @Override
  *         public void requestOnce(org.eclipse.jetty.client.HttpClient client,
  *                                 org.eclipse.jetty.client.api.Response.Listener listener)
@@ -63,7 +63,7 @@ public abstract class Jetty94SingleRequester
      */
     public final boolean toRetry(Exception exception) {
         // Expects |org.eclipse.jetty.client.HttpResponseException| is throws in case of HTTP error status
-        // such as implemented in |Jetty93RetryHelper|.
+        // such as implemented in |Jetty94RetryHelper|.
         if (exception instanceof org.eclipse.jetty.client.HttpResponseException) {
             return isResponseStatusToRetry(((org.eclipse.jetty.client.HttpResponseException) exception).getResponse());
         }
