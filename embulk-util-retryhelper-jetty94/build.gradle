@@ -1,12 +1,13 @@
 plugins {
     id "java"
+    id "java-library"
     id "maven-publish"
     id "signing"
 }
 
-group = "org.embulk"
-version = "0.9.0-SNAPSHOT"
-description = "Utility library to retry HTTP requests"
+group = "${rootProject.group}"
+version = "${rootProject.version}"
+description = "Utility library to retry HTTP requests through Jetty 9.4 client with Embulk RetryExecutor"
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -18,6 +19,13 @@ configurations {
 
 repositories {
     mavenCentral()
+}
+
+dependencies {
+    compileOnly "org.slf4j:slf4j-api:1.7.30"
+
+    api project(":")
+    api "org.eclipse.jetty:jetty-client:9.4.51.v20230217"
 }
 
 tasks.withType(JavaCompile) {
@@ -86,6 +94,10 @@ publishing {
                         name = "Dai MIKURUBE"
                         email = "dmikurube@treasure-data.com"
                     }
+                    developer {
+                        name = "Thanh Le"
+                        email = "thanh.le@treasure-data.com"
+                    }
                 }
 
                 scm {
@@ -117,3 +129,4 @@ publishing {
 signing {
     sign publishing.publications.maven
 }
+
