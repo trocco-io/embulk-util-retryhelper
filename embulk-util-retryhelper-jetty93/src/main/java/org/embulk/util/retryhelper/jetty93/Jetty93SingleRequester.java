@@ -25,14 +25,12 @@ package org.embulk.util.retryhelper.jetty93;
  * InputStream inputStream = jetty93RetryHelper.requestWithRetry(
  *     new InputStreamJetty93ResponseEntityReader(),
  *     new Jetty93SingleRequester() {
- *         @Override
  *         public void requestOnce(org.eclipse.jetty.client.HttpClient client,
  *                                 org.eclipse.jetty.client.api.Response.Listener listener)
  *         {
  *             client.newRequest("https://example.com/api/resource").method(HttpMethod.GET).send(listener);
  *         }
  *
- *         @Override
  *         public boolean isResponseStatusToRetry(org.eclipse.jetty.client.api.Response response)
  *         {
  *             return (response.getStatus() / 100) == 4;

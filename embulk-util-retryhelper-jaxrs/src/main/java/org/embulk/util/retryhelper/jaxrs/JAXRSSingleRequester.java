@@ -25,13 +25,11 @@ package org.embulk.util.retryhelper.jaxrs;
  * javax.ws.rs.core.Response response = jaxrsRetryHelper.requestWithRetry(
  *     new StringJAXRSResponseEntityReader(),
  *     new JAXRSSingleRequester() {
- *         @Override
  *         public Response requestOnce(javax.ws.rs.client.Client client)
  *         {
  *             return client.target("https://example.com/api/resource").request().get;
  *         }
  *
- *         @Override
  *         public boolean isResponseStatusToRetry(javax.ws.rs.core.Response response)
  *         {
  *             return (response.getStatus() / 100) == 4;
@@ -39,7 +37,7 @@ package org.embulk.util.retryhelper.jaxrs;
  *     });
  * }</pre>
  *
- * @see JAXRSResponseReadable
+ * @see JAXRSResponseReader
  * @see StringJAXRSResponseEntityReader
  */
 public abstract class JAXRSSingleRequester
