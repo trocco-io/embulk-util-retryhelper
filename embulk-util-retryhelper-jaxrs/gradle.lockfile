@@ -1,3 +1,6 @@
 # This is a Gradle generated file for dependency locking.
 # Manual edits can break the build and are not advised.
 # This file is expected to be part of source control.
+javax.ws.rs:javax.ws.rs-api:2.0.1=compileClasspath,runtimeClasspath
+org.slf4j:slf4j-api:1.7.30=compileClasspath
+empty=
