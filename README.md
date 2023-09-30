@@ -1,7 +1,7 @@
 embulk-util-retryhelper
 ========================
 
-Utility libraries to retry HTTP requests.
+Utility library for retries.
 
 Versions and compatibility
 ---------------------------
@@ -11,7 +11,7 @@ Please remember to specify a version of this library when you use it. This is ju
 For Embulk plugin developers
 -----------------------------
 
-* [Javadoc](https://dev.embulk.org/embulk-util-json/)
+* [Javadoc](https://dev.embulk.org/embulk-util-retryhelper/)
 
 For Maintainers
 ----------------

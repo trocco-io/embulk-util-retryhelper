@@ -17,4 +17,4 @@ jobs:
         distribution: "temurin"
         cache: "gradle"
     - name: Check
-      run: ./gradlew --stacktrace :check embulk-util-retryhelper-jaxrs:check embulk-util-retryhelper-jetty92:check embulk-util-retryhelper-jetty93:check embulk-util-retryhelper-jetty94:check
+      run: ./gradlew --stacktrace :check

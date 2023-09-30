@@ -6,7 +6,7 @@ plugins {
 
 group = "org.embulk"
 version = "0.10.0-SNAPSHOT"
-description = "Utility library to retry HTTP requests"
+description = "Utility library for retries"
 
 configurations {
     compileClasspath.resolutionStrategy.activateDependencyLocking()
