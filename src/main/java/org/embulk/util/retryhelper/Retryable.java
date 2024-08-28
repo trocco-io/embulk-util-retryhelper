@@ -24,6 +24,10 @@ public interface Retryable<T> extends Callable<T> {
 
     boolean isRetryableException(Exception exception);
 
+    default int adjustRetryWait(Exception exception, int retryCount, int retryLimit, int retryWait) throws RetryGiveupException {
+        return retryWait;
+    }
+
     void onRetry(Exception exception, int retryCount, int retryLimit, int retryWait) throws RetryGiveupException;
 
     void onGiveup(Exception firstException, Exception lastException) throws RetryGiveupException;
