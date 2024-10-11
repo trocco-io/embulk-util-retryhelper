@@ -142,7 +142,7 @@ publishing {
         */
         maven {
             name = "GitHubPackages"
-            url = "https://maven.pkg.github.com/t3t5u/embulk-util-retryhelper"
+            url = "https://maven.pkg.github.com/trocco-io/embulk-util-retryhelper"
             credentials {
                 username = System.getenv("GITHUB_ACTOR")
                 password = System.getenv("GITHUB_TOKEN")
