@@ -117,6 +117,7 @@ public class RetryExecutor {
                 }
 
                 retryCount++;
+                retryWait = op.adjustRetryWait(exception, retryCount, retryLimit, retryWait);
                 op.onRetry(exception, retryCount, retryLimit, retryWait);
 
                 try {

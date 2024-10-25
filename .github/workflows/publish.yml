@@ -5,8 +5,6 @@ on:
       - "v0.*"
 jobs:
   publish:
-    environment:
-      name: maven-central
     runs-on: ubuntu-latest
     strategy:
       fail-fast: true
@@ -18,9 +16,6 @@ jobs:
         java-version: 8
         distribution: "temurin"
     - name: Publish
-      run: ./gradlew --stacktrace :publishMavenPublicationToMavenCentralRepository
+      run: ./gradlew publish
       env:
-        ORG_GRADLE_PROJECT_ossrhUsername: ${{ vars.OSSRH_USERNAME }}
-        ORG_GRADLE_PROJECT_ossrhPassword: ${{ secrets.OSSRH_PASSWORD }}
-        ORG_GRADLE_PROJECT_signingKey: ${{ secrets.GPG_PRIVATE_KEY_ARMOR }}
-        ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.GPG_PRIVATE_KEY_PASSWORD }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

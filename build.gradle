@@ -1,11 +1,11 @@
 plugins {
     id "java"
     id "maven-publish"
-    id "signing"
+//  id "signing"
 }
 
 group = "org.embulk"
-version = "0.10.0-SNAPSHOT"
+version = "0.10.1-SNAPSHOT"
 description = "Utility library for retries"
 
 configurations {
@@ -125,6 +125,7 @@ publishing {
     }
 
     repositories {
+        /*
         maven {  // publishMavenPublicationToMavenCentralRepository
             name = "mavenCentral"
             if (project.version.endsWith("-SNAPSHOT")) {
@@ -138,9 +139,18 @@ publishing {
                 password = project.hasProperty("ossrhPassword") ? ossrhPassword : ""
             }
         }
+        */
+        maven {
+            name = "GitHubPackages"
+            url = "https://maven.pkg.github.com/trocco-io/embulk-util-retryhelper"
+            credentials {
+                username = System.getenv("GITHUB_ACTOR")
+                password = System.getenv("GITHUB_TOKEN")
+            }
+        }
     }
 }
-
+/*
 signing {
     if (project.hasProperty("signingKey") && project.hasProperty("signingPassword")) {
         logger.lifecycle("Signing with an in-memory key.")
@@ -148,3 +158,4 @@ signing {
     }
     sign publishing.publications.maven
 }
+*/
